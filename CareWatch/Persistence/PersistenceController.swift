@@ -2,7 +2,11 @@ import CoreData
 
 struct PersistenceController {
     static let shared = PersistenceController()
-    static let preview = PersistenceController(inMemory: true)
+    static let preview: PersistenceController = {
+        let controller = PersistenceController(inMemory: true)
+        SampleData.seedIfNeeded(in: controller.container.viewContext)
+        return controller
+    }()
 
     let container: NSPersistentContainer
 
@@ -20,7 +24,7 @@ struct PersistenceController {
         container.viewContext.automaticallyMergesChangesFromParent = true
     }
 
-    /// Saves only if something actually changed
+    // Saves only if something actually changed
     func save() {
         let context = container.viewContext
         guard context.hasChanges else { return }
