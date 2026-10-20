@@ -15,6 +15,7 @@ struct RoutineFormView: View {
     @State private var dosage = ""
     @State private var note = ""
     @State private var notify = true
+    @State private var saveError: String?
 
     private let categories = [("wellbeing", "Daily wellbeing"),
                               ("medication", "Medication"),
@@ -45,7 +46,11 @@ struct RoutineFormView: View {
                 Section("When") {
                     DatePicker("Reminder time", selection: $time, displayedComponents: .hourAndMinute)
                     dayPicker
+                    Text("Repeats: \(days.text)  ·  tap a day to turn it on or off")
+                        .font(.footnote)
+                        .foregroundStyle(days.isEmpty ? AppColors.emergency : AppColors.secondaryText)
                 }
+                
 
                 Section {
                     Toggle("Send a notification", isOn: $notify)
@@ -71,6 +76,12 @@ struct RoutineFormView: View {
                 }
             }
             .onAppear(perform: load)
+            .alert("Couldn't save", isPresented: Binding(get: { saveError != nil },
+             set: { if !$0 { saveError = nil } })) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text(saveError ?? "")
+            }
         }
     }
 
@@ -122,8 +133,14 @@ struct RoutineFormView: View {
         item.notify = notify
         item.dosage = (category == "medication" && !dosage.isEmpty) ? dosage : nil
         item.note = note.isEmpty ? nil : note
-        try? context.save()
-        dismiss()
+
+        do {
+            try context.save()
+            dismiss()
+        } catch {
+            saveError = error.localizedDescription
+            print("Routine save failed: \(error)")
+        }
     }
 }
 

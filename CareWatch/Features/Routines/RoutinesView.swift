@@ -9,10 +9,17 @@ struct RoutinesView: View {
     @State private var showingAdd = false
     @State private var editing: Routine?
 
-    /// Only today's routines, in time order
+    // Routines planned for today, in time order
     private var todays: [Routine] {
         routines
             .filter { $0.isScheduled(on: .now) }
+            .sorted { $0.scheduledTime(on: .now) < $1.scheduledTime(on: .now) }
+    }
+
+    // Saved routines that are not planned for today
+    private var otherDays: [Routine] {
+        routines
+            .filter { !$0.isScheduled(on: .now) }
             .sorted { $0.scheduledTime(on: .now) < $1.scheduledTime(on: .now) }
     }
 
@@ -31,12 +38,26 @@ struct RoutinesView: View {
                                    onEdit: { editing = routine })
                             .cardRow()
                     }
-                    .onDelete(perform: delete)
+                    .onDelete { delete(todays, at: $0) }
                 } header: {
-                    Text("Your checklist")
-                        .font(.title3.bold())
-                        .foregroundStyle(AppColors.ink)
-                        .textCase(nil)
+                    sectionTitle("Your checklist")
+                }
+
+                if !otherDays.isEmpty {
+                    Section {
+                        ForEach(otherDays, id: \.objectID) { routine in
+                            Button { editing = routine } label: {
+                                ListRow(systemImage: "calendar",
+                                        title: routine.title ?? "Routine",
+                                        subtitle: "\(routine.timeText) · \(routine.daysText)")
+                            }
+                            .buttonStyle(.plain)
+                            .cardRow()
+                        }
+                        .onDelete { delete(otherDays, at: $0) }
+                    } header: {
+                        sectionTitle("Other days")
+                    }
                 }
 
                 PrimaryButton(title: "+  Add reminder") { showingAdd = true }
@@ -46,8 +67,8 @@ struct RoutinesView: View {
             .scrollContentBackground(.hidden)
             .background(AppColors.background)
             .overlay {
-                if todays.isEmpty {
-                    ContentUnavailableView("No routines today",
+                if routines.isEmpty {
+                    ContentUnavailableView("No routines yet",
                                            systemImage: "checklist",
                                            description: Text("Tap + Add reminder to create one."))
                 }
@@ -65,6 +86,13 @@ struct RoutinesView: View {
                 }
             }
         }
+    }
+
+    private func sectionTitle(_ text: String) -> some View {
+        Text(text)
+            .font(.title3.bold())
+            .foregroundStyle(AppColors.ink)
+            .textCase(nil)
     }
 
     private var progressCard: some View {
@@ -88,16 +116,19 @@ struct RoutinesView: View {
         .accessibilityElement(children: .combine)
     }
 
-    private func delete(at offsets: IndexSet) {
-        let items = todays
+    private func delete(_ items: [Routine], at offsets: IndexSet) {
         for index in offsets {
             context.delete(items[index])
         }
-        try? context.save()
+        do {
+            try context.save()
+        } catch {
+            print("Delete failed: \(error)")
+        }
     }
 }
 
-/// One routine in the checklist: circle = done/undo, the rest = edit
+// One routine in the checklist: circle = done/undo, the rest = edit
 struct RoutineRow: View {
     @ObservedObject var routine: Routine
     let onToggle: () -> Void
@@ -146,7 +177,7 @@ struct RoutineRow: View {
 }
 
 private extension View {
-    /// Makes a List row look like a floating card (no grey lines or background)
+    // Makes a List row look like a floating card (no grey lines or background)
     func cardRow() -> some View {
         self
             .listRowBackground(Color.clear)

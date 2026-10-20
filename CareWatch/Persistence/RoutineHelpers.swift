@@ -66,3 +66,20 @@ extension Routine {
                              second: 0, of: date) ?? date
     }
 }
+extension RepeatDays {
+    // "Every day", "Weekdays", or a list like "Mon, Wed, Fri"
+    var text: String {
+        if self == .everyDay { return "Every day" }
+        if self == [.monday, .tuesday, .wednesday, .thursday, .friday] { return "Weekdays" }
+        if self == [.saturday, .sunday] { return "Weekends" }
+        let names = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        let values: [RepeatDays] = [.monday, .tuesday, .wednesday, .thursday,
+                                    .friday, .saturday, .sunday]
+        let picked = zip(names, values).filter { contains($0.1) }.map { $0.0 }
+        return picked.isEmpty ? "No days selected" : picked.joined(separator: ", ")
+    }
+}
+
+extension Routine {
+    var daysText: String { days.text }
+}
