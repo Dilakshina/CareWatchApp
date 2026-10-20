@@ -118,6 +118,7 @@ struct RoutinesView: View {
 
     private func delete(_ items: [Routine], at offsets: IndexSet) {
         for index in offsets {
+            ReminderService.cancel(items[index])
             context.delete(items[index])
         }
         do {
