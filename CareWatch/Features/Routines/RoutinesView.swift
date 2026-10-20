@@ -6,7 +6,10 @@ struct RoutinesView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.timeOfDay)])
     private var routines: FetchedResults<Routine>
 
-    // Only today's routines, in time order
+    @State private var showingAdd = false
+    @State private var editing: Routine?
+
+    /// Only today's routines, in time order
     private var todays: [Routine] {
         routines
             .filter { $0.isScheduled(on: .now) }
@@ -23,10 +26,10 @@ struct RoutinesView: View {
 
                 Section {
                     ForEach(todays, id: \.objectID) { routine in
-                        RoutineRow(routine: routine) {
-                            withAnimation { routine.toggleDone(in: context) }
-                        }
-                        .cardRow()
+                        RoutineRow(routine: routine,
+                                   onToggle: { withAnimation { routine.toggleDone(in: context) } },
+                                   onEdit: { editing = routine })
+                            .cardRow()
                     }
                     .onDelete(perform: delete)
                 } header: {
@@ -35,6 +38,9 @@ struct RoutinesView: View {
                         .foregroundStyle(AppColors.ink)
                         .textCase(nil)
                 }
+
+                PrimaryButton(title: "+  Add reminder") { showingAdd = true }
+                    .cardRow()
             }
             .listStyle(.plain)
             .scrollContentBackground(.hidden)
@@ -43,10 +49,21 @@ struct RoutinesView: View {
                 if todays.isEmpty {
                     ContentUnavailableView("No routines today",
                                            systemImage: "checklist",
-                                           description: Text("Tap + to add your first reminder."))
+                                           description: Text("Tap + Add reminder to create one."))
                 }
             }
             .navigationTitle("Daily routines")
+            .sheet(isPresented: $showingAdd) {
+                RoutineFormView(routine: nil)
+                    .environment(\.managedObjectContext, context)
+            }
+            .sheet(isPresented: Binding(get: { editing != nil },
+                                        set: { if !$0 { editing = nil } })) {
+                if let editing {
+                    RoutineFormView(routine: editing)
+                        .environment(\.managedObjectContext, context)
+                }
+            }
         }
     }
 
@@ -80,10 +97,11 @@ struct RoutinesView: View {
     }
 }
 
-// One routine in the checklist: tap the circle to mark it done
+/// One routine in the checklist: circle = done/undo, the rest = edit
 struct RoutineRow: View {
     @ObservedObject var routine: Routine
     let onToggle: () -> Void
+    let onEdit: () -> Void
 
     var body: some View {
         let done = routine.isDone(on: .now)
@@ -100,30 +118,35 @@ struct RoutineRow: View {
                 .accessibilityLabel(done ? "Mark \(routine.title ?? "routine") as not done"
                                          : "Mark \(routine.title ?? "routine") as done")
 
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(routine.title ?? "Routine")
-                        .font(.headline)
-                        .foregroundStyle(AppColors.ink)
-                    Text("\(routine.timeText) · \(done ? "Completed" : "Upcoming")")
-                        .font(.subheadline)
-                        .foregroundStyle(AppColors.secondaryText)
+                Button(action: onEdit) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(routine.title ?? "Routine")
+                                .font(.headline)
+                                .foregroundStyle(AppColors.ink)
+                            Text("\(routine.timeText) · \(done ? "Completed" : "Upcoming")")
+                                .font(.subheadline)
+                                .foregroundStyle(AppColors.secondaryText)
+                        }
+                        Spacer()
+                        Text(done ? "Done" : "Due")
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(done ? AppColors.brandTeal : AppColors.warning)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .background(done ? AppColors.mint : AppColors.warningSoft, in: Capsule())
+                    }
+                    .contentShape(Rectangle())
                 }
-
-                Spacer()
-
-                Text(done ? "Done" : "Due")
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(done ? AppColors.brandTeal : AppColors.warning)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(done ? AppColors.mint : AppColors.warningSoft, in: Capsule())
+                .buttonStyle(.plain)
+                .accessibilityHint("Opens the reminder to edit")
             }
         }
     }
 }
 
 private extension View {
-    // Makes a List row look like a floating card (no grey lines or background)
+    /// Makes a List row look like a floating card (no grey lines or background)
     func cardRow() -> some View {
         self
             .listRowBackground(Color.clear)
