@@ -5,6 +5,15 @@ import CoreData
 struct TodayView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.timeOfDay)])
     private var routines: FetchedResults<Routine>
+    
+    @State private var selected: Routine?
+
+    // The next routine today that isn't done yet
+    private var nextRoutine: Routine? {
+        routines
+            .filter { $0.isScheduled(on: .now) && !$0.isDone(on: .now) }
+            .min { $0.scheduledTime(on: .now) < $1.scheduledTime(on: .now) }
+    }
 
     private var summary: TodaySummary {
         TodaySummary(routines: Array(routines), userName: "Maya", steps: 4260)
@@ -21,9 +30,13 @@ struct TodayView: View {
                     statusCard
 
                     section("Next up") {
-                        ListRow(systemImage: "pills.fill",
-                                title: summary.nextMedication,
-                                subtitle: summary.nextMedicationDetail)
+                        Button { selected = nextRoutine } label: {
+                            ListRow(systemImage: "pills.fill",
+                                    title: summary.nextMedication,
+                                    subtitle: summary.nextMedicationDetail)
+                        }
+                        .buttonStyle(.plain)
+                        .disabled(nextRoutine == nil)
                     }
 
                     section("Your day") {
@@ -47,6 +60,9 @@ struct TodayView: View {
             }
             .background(AppColors.background)
             .navigationTitle("\(greeting), \(summary.userName)")
+            .navigationDestination(item: $selected) { routine in
+                MedicationDetailView(routine: routine)
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {

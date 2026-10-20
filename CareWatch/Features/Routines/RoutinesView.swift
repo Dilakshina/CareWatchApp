@@ -8,6 +8,7 @@ struct RoutinesView: View {
 
     @State private var showingAdd = false
     @State private var editing: Routine?
+    @State private var detail: Routine?
 
     // Routines planned for today, in time order
     private var todays: [Routine] {
@@ -35,7 +36,7 @@ struct RoutinesView: View {
                     ForEach(todays, id: \.objectID) { routine in
                         RoutineRow(routine: routine,
                                    onToggle: { withAnimation { routine.toggleDone(in: context) } },
-                                   onEdit: { editing = routine })
+                                   onEdit: { detail = routine })
                             .cardRow()
                     }
                     .onDelete { delete(todays, at: $0) }
@@ -46,7 +47,7 @@ struct RoutinesView: View {
                 if !otherDays.isEmpty {
                     Section {
                         ForEach(otherDays, id: \.objectID) { routine in
-                            Button { editing = routine } label: {
+                            Button { detail = routine } label: {
                                 ListRow(systemImage: "calendar",
                                         title: routine.title ?? "Routine",
                                         subtitle: "\(routine.timeText) · \(routine.daysText)")
@@ -74,6 +75,9 @@ struct RoutinesView: View {
                 }
             }
             .navigationTitle("Daily routines")
+            .navigationDestination(item: $detail) { routine in
+                MedicationDetailView(routine: routine)
+            }
             .sheet(isPresented: $showingAdd) {
                 RoutineFormView(routine: nil)
                     .environment(\.managedObjectContext, context)
