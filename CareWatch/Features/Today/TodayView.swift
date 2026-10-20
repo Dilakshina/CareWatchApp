@@ -1,7 +1,14 @@
 import SwiftUI
+import CoreData
 
+// update the all the routines on time and auto updating
 struct TodayView: View {
-    let summary = TodaySummary.sample
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.timeOfDay)])
+    private var routines: FetchedResults<Routine>
+
+    private var summary: TodaySummary {
+        TodaySummary(routines: Array(routines), userName: "Maya", steps: 4260)
+    }
 
     var body: some View {
         NavigationStack {
@@ -99,4 +106,5 @@ struct TodayView: View {
 
 #Preview {
     TodayView()
+        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
