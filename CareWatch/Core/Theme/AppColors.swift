@@ -21,6 +21,7 @@ enum AppColors {
     static let emergency       = Color(hex: 0xB93F59)
     static let emergencySoft   = Color(hex: 0xFFF0F2)
     static let warning         = Color(hex: 0xB86B25)
+    static let warningSoft     = Color(hex: 0xFFF2D9)
 
     static let primaryGradient = LinearGradient(
         colors: [Color(hex: 0x008D85), Color(hex: 0x38B7A6)],
