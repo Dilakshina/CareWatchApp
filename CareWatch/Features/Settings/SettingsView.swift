@@ -8,7 +8,15 @@ struct SettingsView: View {
 
     var body: some View {
         List {
+            Section("Safety") {
+                NavigationLink("Emergency contact") {
+                    EmergencyContactView()
+                }
+            }
             Section("Your account") {
+                NavigationLink("Profile & security") {
+                    ProfileView()
+                }
                 LabeledContent("Signed in as", value: auth.email ?? "—")
                 Button("Sign out", role: .destructive) { confirmSignOut = true }
             }

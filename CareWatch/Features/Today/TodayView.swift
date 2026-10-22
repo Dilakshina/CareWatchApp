@@ -57,13 +57,18 @@ struct TodayView: View {
                                 subtitle: "\(summary.steps.formatted()) steps today")
                     }
 
-                    ListRow(systemImage: "exclamationmark",
-                            title: "Emergency contact",
-                            subtitle: "Call your selected family member",
-                            tint: AppColors.emergency,
-                            iconBackground: .white,
-                            cardBackground: AppColors.emergencySoft,
-                            showsChevron: false)
+                    NavigationLink {
+                        EmergencyContactView()
+                    } label: {
+                        ListRow(systemImage: "exclamationmark",
+                                title: "Emergency contact",
+                                subtitle: "Call your selected family member",
+                                tint: AppColors.emergency,
+                                iconBackground: .white,
+                                cardBackground: AppColors.emergencySoft,
+                                showsChevron: false)
+                    }
+                    .buttonStyle(.plain)
                 }
                 .padding(20)
             }
