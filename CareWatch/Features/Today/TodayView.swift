@@ -1,12 +1,12 @@
 import SwiftUI
 import CoreData
 
-// update the all the routines on time and auto updating
 struct TodayView: View {
     @FetchRequest(sortDescriptors: [SortDescriptor(\.timeOfDay)])
     private var routines: FetchedResults<Routine>
-    
+
     @State private var selected: Routine?
+    @State private var showingSettings = false
 
     // The next routine today that isn't done yet
     private var nextRoutine: Routine? {
@@ -63,10 +63,13 @@ struct TodayView: View {
             .navigationDestination(item: $selected) { routine in
                 MedicationDetailView(routine: routine)
             }
+            .navigationDestination(isPresented: $showingSettings) {
+                SettingsView()
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        // Opens Settings in feature/settings-privacy
+                        showingSettings = true
                     } label: {
                         Image(systemName: "gearshape")
                     }
@@ -77,7 +80,7 @@ struct TodayView: View {
         }
     }
 
-    // tabs on the screen pieces
+    // pieces of the screen
 
     private var greeting: String {
         let hour = Calendar.current.component(.hour, from: .now)
