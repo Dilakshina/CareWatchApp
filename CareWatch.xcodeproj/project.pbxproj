@@ -6,13 +6,31 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		340806D8308A5402001DF60D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 340806D7308A5402001DF60D /* FirebaseAuth */; };
+		340806DA308A540C001DF60D /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 340806D9308A540C001DF60D /* FirebaseCore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		3407A1593083C6FD00F503AB /* CareWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CareWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		340806D5308A538E001DF60D /* Exceptions for "CareWatch" folder in "CareWatch" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 3407A1583083C6FD00F503AB /* CareWatch */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3407A15B3083C6FD00F503AB /* CareWatch */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				340806D5308A538E001DF60D /* Exceptions for "CareWatch" folder in "CareWatch" target */,
+			);
 			path = CareWatch;
 			sourceTree = "<group>";
 		};
@@ -23,6 +41,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				340806DA308A540C001DF60D /* FirebaseCore in Frameworks */,
+				340806D8308A5402001DF60D /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -33,6 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				3407A15B3083C6FD00F503AB /* CareWatch */,
+				340806D6308A53B3001DF60D /* Frameworks */,
 				3407A15A3083C6FD00F503AB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +64,13 @@
 				3407A1593083C6FD00F503AB /* CareWatch.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		340806D6308A53B3001DF60D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -65,6 +93,8 @@
 			);
 			name = CareWatch;
 			packageProductDependencies = (
+				340806D7308A5402001DF60D /* FirebaseAuth */,
+				340806D9308A540C001DF60D /* FirebaseCore */,
 			);
 			productName = CareWatch;
 			productReference = 3407A1593083C6FD00F503AB /* CareWatch.app */;
@@ -94,6 +124,9 @@
 			);
 			mainGroup = 3407A1503083C6FD00F503AB;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				340806D3308A5191001DF60D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 3407A15A3083C6FD00F503AB /* Products */;
 			projectDirPath = "";
@@ -253,6 +286,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CareWatch/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +318,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CareWatch/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -328,6 +363,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		340806D3308A5191001DF60D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 13.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		340806D7308A5402001DF60D /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 340806D3308A5191001DF60D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		340806D9308A540C001DF60D /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 340806D3308A5191001DF60D /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3407A1513083C6FD00F503AB /* Project object */;
 }
