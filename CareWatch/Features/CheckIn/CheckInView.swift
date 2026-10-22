@@ -49,7 +49,10 @@ struct CheckInView: View {
                     if checkIns.isEmpty {
                         Text("No check-ins yet.")
                             .foregroundStyle(AppColors.secondaryText)
-                    } else {
+                        
+                    }
+                    
+                    else {
                         ForEach(checkIns.prefix(5), id: \.objectID) { item in
                             ListRow(systemImage: "checkmark.circle",
                                     title: "I'm okay",
@@ -57,6 +60,21 @@ struct CheckInView: View {
                                     showsChevron: false)
                         }
                     }
+                    
+                    NavigationLink {
+                        EmergencyContactView()
+                    } label: {
+                        ListRow(systemImage: "exclamationmark",
+                                title: "Call emergency contact",
+                                subtitle: "For immediate help",
+                                tint: AppColors.emergency,
+                                iconBackground: .white,
+                                cardBackground: AppColors.emergencySoft,
+                                showsChevron: false)
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.top, 8)
+                    
                 }
                 .padding(20)
             }
