@@ -14,6 +14,9 @@ struct SettingsView: View {
                 }
             }
             Section("Your account") {
+                NavigationLink("Profile & security") {
+                    ProfileView()
+                }
                 LabeledContent("Signed in as", value: auth.email ?? "—")
                 Button("Sign out", role: .destructive) { confirmSignOut = true }
             }
