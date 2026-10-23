@@ -9,10 +9,41 @@
 /* Begin PBXBuildFile section */
 		340806D8308A5402001DF60D /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 340806D7308A5402001DF60D /* FirebaseAuth */; };
 		340806DA308A540C001DF60D /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 340806D9308A540C001DF60D /* FirebaseCore */; };
+		3408081B308BAD5D001DF60D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3408081A308BAD5D001DF60D /* WidgetKit.framework */; };
+		3408081D308BAD5D001DF60D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3408081C308BAD5D001DF60D /* SwiftUI.framework */; };
+		34080828308BAD5E001DF60D /* CareWatchWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 34080819308BAD5D001DF60D /* CareWatchWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		34080826308BAD5E001DF60D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3407A1513083C6FD00F503AB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 34080818308BAD5D001DF60D;
+			remoteInfo = CareWatchWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3408082D308BAD5E001DF60D /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				34080828308BAD5E001DF60D /* CareWatchWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3407A1593083C6FD00F503AB /* CareWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CareWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		34080819308BAD5D001DF60D /* CareWatchWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = CareWatchWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		3408081A308BAD5D001DF60D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		3408081C308BAD5D001DF60D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		3408082E308BAFA9001DF60D /* CareWatchWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CareWatchWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -23,6 +54,13 @@
 			);
 			target = 3407A1583083C6FD00F503AB /* CareWatch */;
 		};
+		3408082C308BAD5E001DF60D /* Exceptions for "CareWatchWidget" folder in "CareWatchWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 34080818308BAD5D001DF60D /* CareWatchWidgetExtension */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +70,14 @@
 				340806D5308A538E001DF60D /* Exceptions for "CareWatch" folder in "CareWatch" target */,
 			);
 			path = CareWatch;
+			sourceTree = "<group>";
+		};
+		3408081E308BAD5D001DF60D /* CareWatchWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				3408082C308BAD5E001DF60D /* Exceptions for "CareWatchWidget" folder in "CareWatchWidgetExtension" target */,
+			);
+			path = CareWatchWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -46,13 +92,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		34080816308BAD5D001DF60D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3408081D308BAD5D001DF60D /* SwiftUI.framework in Frameworks */,
+				3408081B308BAD5D001DF60D /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		3407A1503083C6FD00F503AB = {
 			isa = PBXGroup;
 			children = (
+				3408082E308BAFA9001DF60D /* CareWatchWidgetExtension.entitlements */,
 				3407A15B3083C6FD00F503AB /* CareWatch */,
+				3408081E308BAD5D001DF60D /* CareWatchWidget */,
 				340806D6308A53B3001DF60D /* Frameworks */,
 				3407A15A3083C6FD00F503AB /* Products */,
 			);
@@ -62,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				3407A1593083C6FD00F503AB /* CareWatch.app */,
+				34080819308BAD5D001DF60D /* CareWatchWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -69,6 +127,8 @@
 		340806D6308A53B3001DF60D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3408081A308BAD5D001DF60D /* WidgetKit.framework */,
+				3408081C308BAD5D001DF60D /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -83,10 +143,12 @@
 				3407A1553083C6FD00F503AB /* Sources */,
 				3407A1563083C6FD00F503AB /* Frameworks */,
 				3407A1573083C6FD00F503AB /* Resources */,
+				3408082D308BAD5E001DF60D /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				34080827308BAD5E001DF60D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				3407A15B3083C6FD00F503AB /* CareWatch */,
@@ -100,6 +162,28 @@
 			productReference = 3407A1593083C6FD00F503AB /* CareWatch.app */;
 			productType = "com.apple.product-type.application";
 		};
+		34080818308BAD5D001DF60D /* CareWatchWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 34080829308BAD5E001DF60D /* Build configuration list for PBXNativeTarget "CareWatchWidgetExtension" */;
+			buildPhases = (
+				34080815308BAD5D001DF60D /* Sources */,
+				34080816308BAD5D001DF60D /* Frameworks */,
+				34080817308BAD5D001DF60D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				3408081E308BAD5D001DF60D /* CareWatchWidget */,
+			);
+			name = CareWatchWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = CareWatchWidgetExtension;
+			productReference = 34080819308BAD5D001DF60D /* CareWatchWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -111,6 +195,9 @@
 				LastUpgradeCheck = 2660;
 				TargetAttributes = {
 					3407A1583083C6FD00F503AB = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					34080818308BAD5D001DF60D = {
 						CreatedOnToolsVersion = 26.6;
 					};
 				};
@@ -133,12 +220,20 @@
 			projectRoot = "";
 			targets = (
 				3407A1583083C6FD00F503AB /* CareWatch */,
+				34080818308BAD5D001DF60D /* CareWatchWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3407A1573083C6FD00F503AB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		34080817308BAD5D001DF60D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -155,7 +250,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		34080815308BAD5D001DF60D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		34080827308BAD5E001DF60D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 34080818308BAD5D001DF60D /* CareWatchWidgetExtension */;
+			targetProxy = 34080826308BAD5E001DF60D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3407A1623083C6FE00F503AB /* Debug */ = {
@@ -351,6 +461,68 @@
 			};
 			name = Release;
 		};
+		3408082A308BAD5E001DF60D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CareWatchWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SD94R622ML;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CareWatchWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CareWatchWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.d.CareWatch.CareWatchWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3408082B308BAD5E001DF60D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CareWatchWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = SD94R622ML;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CareWatchWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = CareWatchWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.d.CareWatch.CareWatchWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -368,6 +540,15 @@
 			buildConfigurations = (
 				3407A1653083C6FE00F503AB /* Debug */,
 				3407A1663083C6FE00F503AB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		34080829308BAD5E001DF60D /* Build configuration list for PBXNativeTarget "CareWatchWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3408082A308BAD5E001DF60D /* Debug */,
+				3408082B308BAD5E001DF60D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

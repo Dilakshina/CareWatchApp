@@ -76,6 +76,13 @@ struct TodayView: View {
             .background(AppColors.background)
             .navigationTitle("\(greeting), \(summary.userName)")
             .task { await health.refresh() }
+            .task(id: "\(summary.routinesCompleted)-\(summary.routinesTotal)-\(summary.steps)-\(summary.nextMedication)") {
+                WidgetSync.update(completed: summary.routinesCompleted,
+                                  total: summary.routinesTotal,
+                                  steps: summary.steps,
+                                  nextTitle: nextRoutine?.title ?? "All done",
+                                  nextTime: nextRoutine?.timeText ?? "—")
+            }
             .navigationDestination(item: $selected) { routine in
                 MedicationDetailView(routine: routine)
             }
