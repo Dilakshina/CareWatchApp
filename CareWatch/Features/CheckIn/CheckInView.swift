@@ -6,7 +6,9 @@ struct CheckInView: View {
     @Environment(\.managedObjectContext) private var context
     @FetchRequest(sortDescriptors: [SortDescriptor(\.timestamp, order: .reverse)])
     private var checkIns: FetchedResults<CheckIn>
-
+    @FetchRequest(sortDescriptors: []) private var homes: FetchedResults<HomeLocation>
+    
+    
     @State private var showToast = false
     @State private var showMovementPrompt = false
     @State private var movementStatus = "Checking movement…"
@@ -47,6 +49,17 @@ struct CheckInView: View {
                         .font(.title3.bold())
                         .foregroundStyle(AppColors.ink)
                         .padding(.top, 6)
+                    
+                    NavigationLink {
+                        HomeLocationView()
+                    } label: {
+                        ListRow(systemImage: "house",
+                                title: "Home status",
+                                subtitle: homes.isEmpty
+                                    ? "Set your home location"
+                                    : "Home set · \(Int(homes.first?.radius ?? 200)) m check-in area")
+                    }
+                    .buttonStyle(.plain)
 
                     Button { showMovementPrompt = true } label: {
                         ListRow(systemImage: "waveform.path.ecg",

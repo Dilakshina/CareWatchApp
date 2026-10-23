@@ -14,8 +14,8 @@ struct CareWatchApp: App {
         _auth = StateObject(wrappedValue: AuthService())
         SampleData.seedIfNeeded(in: persistence.container.viewContext)
         UNUserNotificationCenter.current().delegate = NotificationDelegate.shared
+        _ = LocationService.shared
     }
-
     var body: some Scene {
         WindowGroup {
             RootView()
