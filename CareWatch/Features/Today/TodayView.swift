@@ -9,6 +9,7 @@ struct TodayView: View {
     @State private var showingSettings = false
     
     @EnvironmentObject private var auth: AuthService
+    @EnvironmentObject private var health: HealthService
     @FetchRequest(sortDescriptors: []) private var profiles: FetchedResults<UserProfile>
 
     // First name from the saved profile
@@ -25,7 +26,7 @@ struct TodayView: View {
     }
 
     private var summary: TodaySummary {
-        TodaySummary(routines: Array(routines), userName: firstName, steps: 4260)
+        TodaySummary(routines: Array(routines), userName: firstName, steps: health.steps)
     }
 
     var body: some View {
@@ -74,6 +75,7 @@ struct TodayView: View {
             }
             .background(AppColors.background)
             .navigationTitle("\(greeting), \(summary.userName)")
+            .task { await health.refresh() }
             .navigationDestination(item: $selected) { routine in
                 MedicationDetailView(routine: routine)
             }
