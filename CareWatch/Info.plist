@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>CareWatch can record when you arrive at or leave home, even when the app is closed. Your location stays on this iPhone.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>CareWatch uses your location to set your home on the map.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>CareWatch uses motion data to suggest a check-in if you have not moved for a while.</string>
 </dict>
