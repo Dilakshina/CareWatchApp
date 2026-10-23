@@ -1,15 +1,17 @@
 import SwiftUI
 import CoreData
 
-// checkin and checkin confirmed
+
 struct CheckInView: View {
     @Environment(\.managedObjectContext) private var context
     @FetchRequest(sortDescriptors: [SortDescriptor(\.timestamp, order: .reverse)])
     private var checkIns: FetchedResults<CheckIn>
 
     @State private var showToast = false
+    @State private var showMovementPrompt = false
+    @State private var movementStatus = "Checking movement…"
 
-  
+    // Most recent check-in made today, if any
     private var lastToday: CheckIn? {
         checkIns.first { Calendar.current.isDateInToday($0.timestamp ?? .distantPast) }
     }
@@ -41,26 +43,18 @@ struct CheckInView: View {
                         .buttonStyle(.plain)
                     }
 
-                    Text("Recent check-ins")
+                    Text("Safety signals")
                         .font(.title3.bold())
                         .foregroundStyle(AppColors.ink)
                         .padding(.top, 6)
 
-                    if checkIns.isEmpty {
-                        Text("No check-ins yet.")
-                            .foregroundStyle(AppColors.secondaryText)
-                        
+                    Button { showMovementPrompt = true } label: {
+                        ListRow(systemImage: "waveform.path.ecg",
+                                title: "Inactivity check",
+                                subtitle: movementStatus)
                     }
-                    
-                    else {
-                        ForEach(checkIns.prefix(5), id: \.objectID) { item in
-                            ListRow(systemImage: "checkmark.circle",
-                                    title: "I'm okay",
-                                    subtitle: (item.timestamp ?? .now).formatted(date: .abbreviated, time: .shortened),
-                                    showsChevron: false)
-                        }
-                    }
-                    
+                    .buttonStyle(.plain)
+
                     NavigationLink {
                         EmergencyContactView()
                     } label: {
@@ -73,8 +67,23 @@ struct CheckInView: View {
                                 showsChevron: false)
                     }
                     .buttonStyle(.plain)
-                    .padding(.top, 8)
-                    
+
+                    Text("Recent check-ins")
+                        .font(.title3.bold())
+                        .foregroundStyle(AppColors.ink)
+                        .padding(.top, 6)
+
+                    if checkIns.isEmpty {
+                        Text("No check-ins yet.")
+                            .foregroundStyle(AppColors.secondaryText)
+                    } else {
+                        ForEach(checkIns.prefix(5), id: \.objectID) { item in
+                            ListRow(systemImage: "checkmark.circle",
+                                    title: "I'm okay",
+                                    subtitle: (item.timestamp ?? .now).formatted(date: .abbreviated, time: .shortened),
+                                    showsChevron: false)
+                        }
+                    }
                 }
                 .padding(20)
             }
@@ -90,6 +99,11 @@ struct CheckInView: View {
                 guard showToast else { return }
                 try? await Task.sleep(for: .seconds(2.5))
                 withAnimation { showToast = false }
+            }
+            .task { await checkMovement() }
+            .sheet(isPresented: $showMovementPrompt) {
+                MovementPromptSheet()
+                    .environment(\.managedObjectContext, context)
             }
         }
     }
@@ -119,6 +133,19 @@ struct CheckInView: View {
         withAnimation {
             CheckIn.record(in: context)
             showToast = true
+        }
+    }
+
+    // Looks at recent phone movement. Only SUGGESTS a check-in, never decides anything.
+    private func checkMovement() async {
+        switch await MotionService.movedRecently() {
+        case .some(true):
+            movementStatus = "Regular movement detected"
+        case .some(false):
+            movementStatus = "No walking recorded in the last 3 hours"
+            if lastToday == nil { showMovementPrompt = true }
+        case .none:
+            movementStatus = "Needs a real iPhone · tap to preview the prompt"
         }
     }
 }
