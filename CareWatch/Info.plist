@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>NSFaceIDUsageDescription</key>
-	<string>CareWatch uses Face ID to unlock your care information on this iPhone.</string>
-	<key>NSHealthShareUsageDescription</key>
-	<string>CareWatch reads your steps and walking distance to show your daily activity. This data stays on your iPhone.</string>
-	<key>NSHealthUpdateUsageDescription</key>
-	<string>CareWatch does not write to Apple Health.</string>
-</dict>
+<dict/>
 </plist>
