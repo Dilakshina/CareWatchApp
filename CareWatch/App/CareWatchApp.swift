@@ -7,6 +7,7 @@ import FirebaseCore
 struct CareWatchApp: App {
     let persistence = PersistenceController.shared
     @StateObject private var auth: AuthService
+    @StateObject private var health = HealthService()
 
     init() {
         FirebaseApp.configure()                       // must run before AuthService uses Firebase
@@ -19,6 +20,7 @@ struct CareWatchApp: App {
         WindowGroup {
             RootView()
                 .environmentObject(auth)
+                .environmentObject(health)
                 .environment(\.managedObjectContext, persistence.container.viewContext)
         }
     }
