@@ -26,9 +26,9 @@ The following table shows the main features planned for CareWatch and their curr
 | 8 | Check-in and medication reminders | Completed | Record an “I'm okay” check-in and mark medication as taken or undo it |
 | 9 | Activity and history | Completed | Activity information, daily history and weekly summary |
 | 10 | Health activity summary | Completed | HealthKit steps, walking distance, active time and an hourly chart |
-| 11 | Movement confirmation | Not completed | See the limitations section |
-| 12 | Home Screen widget | Not completed | See the limitations section |
-| 13 | Home location check-in | Not completed | See the limitations section |
+| 11 | Movement confirmation | completed | Done |
+| 12 | Home Screen widget | completed | Done |
+| 13 | Home location check-in | completed | Done |
 
 ## Technologies used
 
