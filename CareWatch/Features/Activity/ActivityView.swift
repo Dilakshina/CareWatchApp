@@ -6,6 +6,7 @@ struct ActivityView: View {
     @EnvironmentObject private var health: HealthService
     private let goal = 6000
 
+    // Builds the Activity screen, switching between Health-unavailable, connect, and live steps/distance/chart states
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -53,6 +54,7 @@ struct ActivityView: View {
             .task { await health.refresh() }
         }
     }
+    // Builds the prompt card inviting the user to connect Apple Health
     private var connectCard: some View {
         CardView {
             VStack(alignment: .leading, spacing: 12) {
@@ -69,6 +71,7 @@ struct ActivityView: View {
         }
     }
 
+    // Builds the gradient card showing today's step count against the daily goal
     private var stepsCard: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("STEPS TODAY")
@@ -90,6 +93,7 @@ struct ActivityView: View {
         .accessibilityElement(children: .combine)
     }
 
+    // Builds a small stat tile showing a value with its label and icon
     private func tile(value: String, label: String, icon: String) -> some View {
         CardView {
             VStack(alignment: .leading, spacing: 6) {
@@ -106,6 +110,7 @@ struct ActivityView: View {
         .accessibilityElement(children: .combine)
     }
 
+    // Builds the card with a bar chart of steps for each hour of the day
     private var chartCard: some View {
         CardView {
             VStack(alignment: .leading, spacing: 10) {
@@ -125,6 +130,7 @@ struct ActivityView: View {
         }
     }
 
+    // Builds an informational card with an icon, title and explanatory text
     private func infoCard(icon: String, title: String, text: String) -> some View {
         CardView {
             VStack(alignment: .leading, spacing: 6) {

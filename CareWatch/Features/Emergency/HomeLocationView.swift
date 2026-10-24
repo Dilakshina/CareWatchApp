@@ -19,6 +19,7 @@ struct HomeLocationView: View {
     // Colombo 07, used until a home is chosen
     private let defaultCenter = CLLocationCoordinate2D(latitude: 6.9147, longitude: 79.8730)
 
+    // Lays out the map, location controls, check-in area options and save button
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -107,6 +108,7 @@ struct HomeLocationView: View {
             withAnimation { showToast = false }
         }
     }
+    // Shows the interactive map with the home pin and check-in radius circle
     private var mapCard: some View {
         MapReader { proxy in
             Map(position: $position) {
@@ -158,6 +160,7 @@ struct HomeLocationView: View {
                                               latitudinalMeters: 1200, longitudinalMeters: 1200))
     }
 
+    // Saves the home location and starts or stops geofence monitoring based on the toggles
     private func save() {
         guard let pin else { return }
         let home = homes.first ?? HomeLocation(context: context)
@@ -178,6 +181,7 @@ struct HomeLocationView: View {
         withAnimation { showToast = true }
     }
 
+    // Deletes the saved home location and stops geofence monitoring
     private func remove() {
         homes.forEach(context.delete)
         try? context.save()

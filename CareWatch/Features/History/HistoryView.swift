@@ -31,6 +31,7 @@ struct HistoryView: View {
 
     private var activeDays: Set<Date> { Set(days.map(\.day)) }
 
+    // Builds the Care history screen: a weekly summary card plus day-grouped sections of care events
     var body: some View {
         NavigationStack {
             List {
@@ -67,6 +68,7 @@ struct HistoryView: View {
             .navigationTitle("Care history")
         }
     }
+    // Builds the gradient card summarising active days over the last seven days with weekday dots
     private var weekCard: some View {
         let count = lastSevenDays.filter { activeDays.contains($0) }.count
         return VStack(alignment: .leading, spacing: 10) {
@@ -98,12 +100,14 @@ struct HistoryView: View {
         .accessibilityElement(children: .combine)
     }
 
+    // Returns a friendly section heading for a day (Today, Yesterday, or a formatted date)
     private func title(for day: Date) -> String {
         if Calendar.current.isDateInToday(day) { return "Today" }
         if Calendar.current.isDateInYesterday(day) { return "Yesterday" }
         return day.formatted(.dateTime.weekday(.wide).day().month(.wide))
     }
 
+    // Maps a care event kind to the SF Symbol name used for its row
     private func icon(for kind: String?) -> String {
         switch kind {
         case "checkIn":     return "checkmark.circle"

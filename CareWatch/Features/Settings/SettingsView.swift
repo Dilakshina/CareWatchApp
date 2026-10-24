@@ -6,6 +6,7 @@ struct SettingsView: View {
     @State private var confirmSignOut = false
     @State private var errorMessage: String?
 
+    // Lists safety and account options, including sign-out with confirmation
     var body: some View {
         List {
             Section("Safety") {

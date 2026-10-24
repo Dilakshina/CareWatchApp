@@ -44,7 +44,7 @@ final class AuthService: ObservableObject {
         try Auth.auth().signOut()
     }
 
-    /// Turns Firebase error codes into friendly messages for older users
+    // Turns Firebase error codes into friendly messages for older users
     static func message(for error: Error) -> String {
         switch (error as NSError).code {
         case 17004, 17009: return "Email or password is incorrect."
