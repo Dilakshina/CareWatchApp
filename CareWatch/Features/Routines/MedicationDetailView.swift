@@ -14,6 +14,7 @@ struct MedicationDetailView: View {
         (routine.log(on: .now)?.completedAt ?? .now).formatted(date: .omitted, time: .shortened)
     }
 
+    // Shows a routine's details with actions to mark it taken, undo, or edit
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
@@ -83,6 +84,7 @@ struct MedicationDetailView: View {
         }
     }
 
+    // Gradient header card showing the routine's title, dose and current status
     private var summaryCard: some View {
         HStack(alignment: .top, spacing: 14) {
             Image(systemName: routine.isMedication ? "pills.fill" : "checklist")
@@ -110,6 +112,7 @@ struct MedicationDetailView: View {
         .accessibilityElement(children: .combine)
     }
 
+    // Builds a labelled card row showing a single detail field
     private func detail(_ label: String, _ value: String) -> some View {
         CardView {
             VStack(alignment: .leading, spacing: 4) {

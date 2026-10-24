@@ -7,6 +7,7 @@ struct AppLockView: View {
 
     @State private var failed = false
 
+    // Builds the locked screen prompting the user to unlock with Face ID or sign out
     var body: some View {
         VStack(spacing: 18) {
             Spacer()
@@ -59,6 +60,7 @@ struct AppLockView: View {
         .task { await unlock() }      // ask for Face ID as soon as the screen appears
     }
 
+    // Runs biometric authentication and unlocks the app, or flags failure
     private func unlock() async {
         if await BiometricService.authenticate() {
             onUnlock()

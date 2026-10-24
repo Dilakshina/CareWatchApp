@@ -1,3 +1,4 @@
+// shows homedashboard , time based greating , routine completion
 import SwiftUI
 import CoreData
 
@@ -29,6 +30,7 @@ struct TodayView: View {
         TodaySummary(routines: Array(routines), userName: firstName, steps: health.steps)
     }
 
+    // Builds the full Today screen: date header, status card, next-up routine, daily summary and emergency contact
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -114,6 +116,7 @@ struct TodayView: View {
         }
     }
 
+    // Builds the gradient status card showing today's routine-completion progress
     private var statusCard: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("TODAY'S STATUS")
@@ -135,6 +138,7 @@ struct TodayView: View {
         .accessibilityElement(children: .combine)
     }
 
+    // Wraps a titled group of rows into a reusable section layout
     private func section<Content: View>(_ title: String,
                                         @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 10) {

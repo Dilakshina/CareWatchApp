@@ -26,6 +26,7 @@ struct RoutinesView: View {
 
     private var doneCount: Int { todays.filter { $0.isDone(on: .now) }.count }
 
+    // Shows today's routine checklist, a progress card, and other-day routines
     var body: some View {
         NavigationStack {
             List {
@@ -92,6 +93,7 @@ struct RoutinesView: View {
         }
     }
 
+    // Builds a styled header label used for each list section
     private func sectionTitle(_ text: String) -> some View {
         Text(text)
             .font(.title3.bold())
@@ -99,6 +101,7 @@ struct RoutinesView: View {
             .textCase(nil)
     }
 
+    // Gradient card summarising how many of today's routines are done
     private var progressCard: some View {
         let left = todays.count - doneCount
         return VStack(alignment: .leading, spacing: 10) {
@@ -120,6 +123,7 @@ struct RoutinesView: View {
         .accessibilityElement(children: .combine)
     }
 
+    // Cancels reminders and deletes the swiped routines from Core Data
     private func delete(_ items: [Routine], at offsets: IndexSet) {
         for index in offsets {
             ReminderService.cancel(items[index])
@@ -139,6 +143,7 @@ struct RoutineRow: View {
     let onToggle: () -> Void
     let onEdit: () -> Void
 
+    // Lays out one checklist row with a done/undo toggle and an edit tap area
     var body: some View {
         let done = routine.isDone(on: .now)
         CardView {

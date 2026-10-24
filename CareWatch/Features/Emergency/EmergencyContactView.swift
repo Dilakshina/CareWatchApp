@@ -21,6 +21,7 @@ struct EmergencyContactView: View {
         !name.trimmingCharacters(in: .whitespaces).isEmpty && phone.filter(\.isNumber).count >= 9
     }
 
+    // Shows the emergency contact card, the call button, and the edit form
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -93,6 +94,7 @@ struct EmergencyContactView: View {
         }
     }
 
+    // Displays the primary contact's initial, name, relationship and phone number
     private var contactCard: some View {
         HStack(spacing: 14) {
             Text(String((primary?.name ?? "?").prefix(1)))
@@ -126,6 +128,7 @@ struct EmergencyContactView: View {
         phone = primary?.phone ?? ""
     }
 
+    // Saves the edited contact as the primary contact and shows a confirmation
     private func save() {
         let contact = primary ?? CareContact(context: context)
         if contact.id == nil { contact.id = UUID() }
@@ -139,6 +142,7 @@ struct EmergencyContactView: View {
     }
 
     
+    // Starts a phone call to the primary contact and records the event
     private func call() {
         let number = (primary?.phone ?? "").filter { $0.isNumber || $0 == "+" }
         guard let url = URL(string: "tel://\(number)") else { return }
