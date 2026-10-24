@@ -1,6 +1,6 @@
 import SwiftUI
 
-// Settings (account section for now)
+// Settings account section for now
 struct SettingsView: View {
     @EnvironmentObject private var auth: AuthService
     @State private var confirmSignOut = false

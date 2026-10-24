@@ -1,4 +1,4 @@
-// shows homedashboard , time based greating , routine completion
+// shows home dashboard , time based greating , routine completion
 import SwiftUI
 import CoreData
 

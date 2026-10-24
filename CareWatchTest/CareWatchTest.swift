@@ -3,7 +3,7 @@ import CoreData
 @testable import CareWatch
 
 // Unit tests for CareWatch's main logic.
-
+// Each test uses a fresh, empty in-memory database, so real data is never touched.
 @MainActor
 final class CareWatchTests: XCTestCase {
 
@@ -44,6 +44,8 @@ final class CareWatchTests: XCTestCase {
         return try context.fetch(request)
     }
 
+    // Repeat days
+
     // UT01
     func testRepeatDaysText() {
         XCTAssertEqual(RepeatDays.everyDay.text, "Every day")
@@ -59,6 +61,8 @@ final class CareWatchTests: XCTestCase {
         XCTAssertEqual(RepeatDays.from(weekday: 2), .monday)
         XCTAssertEqual(RepeatDays.from(weekday: 7), .saturday)
     }
+
+    //  Routine scheduling
 
     // UT03
     func testRoutineOnlyScheduledOnSelectedDays() {
@@ -85,6 +89,8 @@ final class CareWatchTests: XCTestCase {
         XCTAssertEqual(parts.hour, 18)
         XCTAssertEqual(parts.minute, 30)
     }
+
+    //  Marking routines done
 
     // UT06
     func testMarkDoneSavesLogAndHistoryEvent() throws {
@@ -126,6 +132,8 @@ final class CareWatchTests: XCTestCase {
         XCTAssertFalse(routine.isDone(on: .now))
     }
 
+    // Check-in
+
     // UT09
     func testCheckInIsSavedAndAddedToHistory() throws {
         let container = makeContainer()
@@ -139,6 +147,8 @@ final class CareWatchTests: XCTestCase {
         XCTAssertEqual(checkIns.first?.source, "manual")
         XCTAssertEqual(try events(in: context).first?.kind, "checkIn")
     }
+
+    // Login error messages
 
     // UT10
     func testFriendlyLoginErrorMessages() {
