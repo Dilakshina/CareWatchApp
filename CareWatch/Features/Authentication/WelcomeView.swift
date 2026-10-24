@@ -8,6 +8,7 @@ enum AuthMode: Hashable {
 struct WelcomeView: View {
     @State private var mode: AuthMode?
 
+    // Builds the welcome screen , feature highlights and get-started actions
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -42,6 +43,7 @@ struct WelcomeView: View {
         }
     }
 
+    // The gradient header showing the app icon, name and tagline
     private var hero: some View {
         VStack(spacing: 14) {
             Image(systemName: "heart")

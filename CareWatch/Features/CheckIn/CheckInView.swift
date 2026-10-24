@@ -18,10 +18,12 @@ struct CheckInView: View {
         checkIns.first { Calendar.current.isDateInToday($0.timestamp ?? .distantPast) }
     }
 
+    // Formats a date as a short time string for display
     private func time(_ date: Date?) -> String {
         (date ?? .now).formatted(date: .omitted, time: .shortened)
     }
 
+    // Main check-in screen with status, safety signals and recent check-ins
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -121,6 +123,7 @@ struct CheckInView: View {
         }
     }
 
+    // Card showing whether the user has checked in today
     private var statusCard: some View {
         let done = lastToday != nil
         return VStack(spacing: 12) {
@@ -142,6 +145,7 @@ struct CheckInView: View {
         .accessibilityElement(children: .combine)
     }
 
+    // Records a new check-in and shows the confirmation toast
     private func checkIn() {
         withAnimation {
             CheckIn.record(in: context)

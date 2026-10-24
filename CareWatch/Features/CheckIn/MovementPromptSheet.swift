@@ -6,6 +6,7 @@ struct MovementPromptSheet: View {
     @Environment(\.managedObjectContext) private var context
     @Environment(\.dismiss) private var dismiss
 
+    // Prompt sheet suggesting a check-in after inactivity, with a snooze option
     var body: some View {
         VStack(spacing: 16) {
             Image(systemName: "waveform.path.ecg")

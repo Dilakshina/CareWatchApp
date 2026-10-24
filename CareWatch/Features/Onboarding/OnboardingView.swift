@@ -33,6 +33,7 @@ struct OnboardingView: View {
     
     // user view
 
+    // Builds the multi-step onboarding flow with progress bar, current step and navigation buttons
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             progress
@@ -78,6 +79,7 @@ struct OnboardingView: View {
     }
 
     
+    // The step indicator showing progress through the three onboarding steps
     private var progress: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("Step \(step) of 3")
@@ -94,6 +96,7 @@ struct OnboardingView: View {
         .accessibilityElement(children: .combine)
     }
 
+    // Builds a reusable title-and-subtitle header for each onboarding step
     private func header(_ title: String, _ subtitle: String) -> some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(title)
@@ -104,6 +107,7 @@ struct OnboardingView: View {
         }
     }
 
+    // Step one: collects the user's name, date of birth and optional phone number
     private var profileStep: some View {
         VStack(alignment: .leading, spacing: 16) {
             header("Create your profile", "This helps CareWatch greet you and personalise your reminders.")
@@ -120,6 +124,7 @@ struct OnboardingView: View {
         }
     }
 
+    // Step two: collects the trusted emergency contact's name, relationship and phone number
     private var contactStep: some View {
         VStack(alignment: .leading, spacing: 16) {
             header("Who should we call?", "Choose one trusted family member for one-tap emergency calls.")
@@ -138,6 +143,7 @@ struct OnboardingView: View {
         }
     }
 
+    // Step three: lets the user grant notification and other optional permissions
     private var permissionsStep: some View {
         VStack(alignment: .leading, spacing: 16) {
             header("Choose what to allow", "Every permission is optional. You can change these any time in Settings.")
@@ -177,6 +183,7 @@ struct OnboardingView: View {
 
     // save information part
 
+    // Saves the entered profile and primary emergency contact to Core Data when setup completes
     private func finish() {
         let profile = UserProfile(context: context)
         profile.id = UUID()

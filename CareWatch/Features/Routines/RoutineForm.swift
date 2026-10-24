@@ -29,6 +29,7 @@ struct RoutineFormView: View {
         !title.trimmingCharacters(in: .whitespaces).isEmpty && !days.isEmpty
     }
     
+    // Form for adding or editing a routine's name, time, days and options
     var body: some View {
         NavigationStack {
             Form {
@@ -120,6 +121,7 @@ struct RoutineFormView: View {
         notify = routine.notify
     }
     
+    // Writes the form values to Core Data and schedules its reminder notification
     private func save() {
         let item = routine ?? Routine(context: context)
         if routine == nil {

@@ -22,6 +22,7 @@ struct ProfileView: View {
         !fullName.trimmingCharacters(in: .whitespaces).isEmpty
     }
 
+    // Shows the profile header, personal detail fields and the Face ID unlock toggle
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -92,6 +93,7 @@ struct ProfileView: View {
         }
     }
 
+    // Displays the user's initial, name and email at the top of the profile
     private var headerCard: some View {
         HStack(spacing: 14) {
             Text(String(fullName.prefix(1)).uppercased())
@@ -135,12 +137,14 @@ struct ProfileView: View {
         )
     }
 
+    // Fills the form fields with the saved profile details
     private func load() {
         fullName = profile?.fullName ?? ""
         phone = profile?.phone ?? ""
         dateOfBirth = profile?.dateOfBirth ?? dateOfBirth
     }
 
+    // Saves the edited profile details and shows a confirmation toast
     private func save() {
         guard let profile else { return }
         profile.fullName = fullName.trimmingCharacters(in: .whitespaces)

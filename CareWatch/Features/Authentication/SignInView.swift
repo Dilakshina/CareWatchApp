@@ -15,6 +15,7 @@ struct SignInView: View {
     private var cleanEmail: String { email.trimmingCharacters(in: .whitespaces) }
     private var canSubmit: Bool { cleanEmail.contains("@") && password.count >= 6 && !isWorking }
 
+    // Builds the sign-in / create-account form with email, password and submit action
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
@@ -77,6 +78,7 @@ struct SignInView: View {
         }
     }
 
+    // Handles the submit action: creates a new account or signs the user in
     private func submit() async {
         isWorking = true
         errorMessage = nil
@@ -92,6 +94,7 @@ struct SignInView: View {
         isWorking = false
     }
 
+    // Sends a password reset email to the entered address
     private func resetPassword() async {
         guard cleanEmail.contains("@") else {
             errorMessage = "Type your email above first."
